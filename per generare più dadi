@@ -1,0 +1,15 @@
+fun main() {
+    val d6 = Dice(6)
+    val d20 = Dice(20)
+    val rollDice = d6.roll()  
+    val rollDice = d20.roll()
+    println("the d${d6.numSides} - roll result: ${rollDice}")
+    println("the d${d20.numSides} - roll result: ${rollDice}")
+                         
+} 
+class Dice(val numSides: Int) {  
+    fun roll(): Int{     
+        val randomNumber = (1..numSides).random()  
+       return randomNumber
+    }
+    }

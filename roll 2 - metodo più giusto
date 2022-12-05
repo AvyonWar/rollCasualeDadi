@@ -1,0 +1,14 @@
+fun main() {
+    val dice1 = Dice()  //istanza dell'oggetto
+    val rollDice = dice1.roll() // abbiamo bisogno di sapere cosa ci restituisce 
+                                // (vedi fun roll())
+    println("the d${dice1.sides} - roll result: ${rollDice}")                            
+} 
+class Dice {
+        var sides = 6  //dado
+    fun roll(): Int{     //roll casuale  --> specificare cosa vogliamo che ci restituisca
+        val randomNumber = (1..6).random()  // --> più sintetico
+       // val rollNumber = randomNumber.random()
+       return randomNumber
+    }
+    }

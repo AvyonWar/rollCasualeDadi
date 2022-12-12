@@ -1,0 +1,38 @@
+package com.example.rolldice
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val rollButton: Button = findViewById(R.id.button)
+        rollButton.setOnClickListener { rollDice() }  //richiamo del tiro di dado
+    }
+
+    // logica di tiro dado random di 2 dadi -> d6 e d12
+    private fun rollDice() {
+        val d6 = Dice(6)
+        val d12 = Dice(12)
+
+        val diceRoll = d6.roll()
+        val diceRoll2 = d12.roll()
+
+        val resultTextView: TextView = findViewById(R.id.textView)
+        resultTextView.text = diceRoll.toString()
+        val resultTextView2: TextView = findViewById(R.id.textView2)
+        resultTextView2.text = diceRoll2.toString()
+    }
+}
+
+//classe per il tiro randomico del dado
+class Dice(private val numSides: Int) {
+    fun roll(): Int {
+        return (1..numSides).random()
+
+    }
+}

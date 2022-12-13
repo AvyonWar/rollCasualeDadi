@@ -1,0 +1,121 @@
+//file MAIN
+
+package com.example.rolldice
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val rollButton: Button = findViewById(R.id.button)
+        rollButton.setOnClickListener { rollDice() }  //richiamo del tiro di dado
+        // Do a dice roll when the app starts
+        rollDice()
+    }
+
+    // logica di tiro dado random di 2 dadi -> d6 e d12
+    private fun rollDice() {
+        val d6 = Dice(6)
+        val diceRoll = d6.roll()
+        val diceImage: ImageView = findViewById(R.id.imageView)
+
+// ciclo when per le facce dei dadi - immagini -
+       /* when (diceRoll) {
+            1 -> diceImage.setImageResource(R.drawable.dice_1)
+            2 -> diceImage.setImageResource(R.drawable.dice_2)
+            3 -> diceImage.setImageResource(R.drawable.dice_3)
+            4 -> diceImage.setImageResource(R.drawable.dice_4)
+            5 -> diceImage.setImageResource(R.drawable.dice_5)
+            6 -> diceImage.setImageResource(R.drawable.dice_6)
+        }*/
+
+// metodo più breve
+        val drawableResource = when (diceRoll) {
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            /**
+             * in questo caso WHEN deve gestire t i casi - essere esaustivo - quindi si mette ELSE
+             */
+            else -> R.drawable.dice_6
+        }
+// Update the ImageView with the correct drawable resource ID
+        diceImage.setImageResource(drawableResource)
+// Update the content description
+        diceImage.contentDescription = diceRoll.toString()
+
+    }
+
+    //classe per il tiro randomico del dado
+    class Dice(private val numSides: Int) {
+        fun roll(): Int {
+            return (1..numSides).random()
+
+        }
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//file XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="116sp"
+        android:background="#000000"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/roll"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:visibility="visible"
+        app:iconTint="#750B0B"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="184dp"
+        android:layout_marginBottom="212dp"
+        android:text="@string/d6"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="160sp"
+        android:layout_height="200sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.889"
+        tools:srcCompat="@drawable/dice_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
